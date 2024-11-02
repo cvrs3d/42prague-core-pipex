@@ -1,15 +1,18 @@
-// #include "pipex.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/02 13:13:06 by yustinov          #+#    #+#             */
+/*   Updated: 2024/11/02 13:57:18 by yustinov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// int main(int argc, char **argv)
-// {
-// 	char	*fullpath;
-// 	char	*cmd = argv[1];
+#include "pipex.h"
 
-// 	fullpath = (char *)malloc(ft_strlen("/bin/") + ft_strlen(cmd) + 1);
-// 	if (!fullpath)
-// 		exit(EXIT_FAILURE);
-// 	ft_strncpy(fullpath, "/bin/", 6);
-// 	ft_strncpy(fullpath + 6, cmd, ft_strlen(cmd));
-// 	printf("Path: %s\n", fullpath);
-// 	return 0;
-// }
+void	filler(void)
+{
+	return ;
+}
