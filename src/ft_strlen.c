@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 13:13:06 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/02 13:57:18 by yustinov         ###   ########.fr       */
+/*   Created: 2024/11/01 14:05:26 by yustinov          #+#    #+#             */
+/*   Updated: 2024/11/02 16:27:54 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	filler(void)
+size_t	ft_strlen(const char *s)
 {
-	return ;
+	size_t	len;
+
+	if (!s)
+		return (0);
+	len = 0;
+	while (*s++)
+		len++;
+	return (len);
 }

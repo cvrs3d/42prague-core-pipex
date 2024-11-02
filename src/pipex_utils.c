@@ -6,7 +6,7 @@
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 13:53:54 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/02 13:56:02 by yustinov         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:52:55 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	execute_cmd(char *cmd)
 
 	args = ft_split(cmd, ' ');
 	full_path = set_full_path(args[0]);
-	printf("Command full path: %s\n", full_path);
+	check_cmd_rights(full_path);
 	if (execve(full_path, args, NULL) == -1)
 	{
 		perror("execve failed");

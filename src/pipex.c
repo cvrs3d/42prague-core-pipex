@@ -6,7 +6,7 @@
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:33:38 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/02 13:55:51 by yustinov         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:55:23 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ static void	wait_for_children(void)
 	while (wait(&status) > 0)
 	{
 		if (WIFEXITED(status))
-			printf("Child exited with status %d\n", WEXITSTATUS(status));
+		{
+			continue;
+		}
 		else
-			printf("Child exited abnormally\n");
+			perror("Child exited abnormally\n");
 	}
 }
 
@@ -66,7 +68,7 @@ void	pipex(int argc, char **argv)
 	int		outfile;
 
 	ft_pipe(fd);
-	infile = ft_open(argv[1], O_RDONLY | O_CREAT);
+	infile = ft_open(argv[1], O_RDONLY);
 	outfile = ft_open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC);
 	pid1 = ft_fork();
 	if (pid1 == 0)
