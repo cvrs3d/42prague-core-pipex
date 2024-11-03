@@ -6,7 +6,7 @@
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 14:59:36 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/02 16:29:56 by yustinov         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:55:34 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*pipex_heredoc(char *limiter)
 	return (line);
 }
 
-void	handle_here_doc(char **argv)
+char	*handle_here_doc(char **argv)
 {
 	char	*line;
 	char	*limiter;
@@ -53,7 +53,5 @@ void	handle_here_doc(char **argv)
 		perror("heredoc failed");
 		exit(EXIT_FAILURE);
 	}
-	write(STDOUT_FILENO, line, ft_strlen(line));
-	free(line);
-	return ;
+	return (line);
 }

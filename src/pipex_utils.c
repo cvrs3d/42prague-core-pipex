@@ -6,7 +6,7 @@
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 13:53:54 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/02 15:52:55 by yustinov         ###   ########.fr       */
+/*   Updated: 2024/11/03 13:40:05 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,17 @@ void	close_fds(int *fd, int *infile, int *outfile)
 {
 	close(fd[0]);
 	close(fd[1]);
-	close(*infile);
-	close(*outfile);
+	if (*infile > 0)
+	{
+		close(*infile);
+		*infile = -1;
+	}
+	if (*outfile > 0)
+	{
+		close(*outfile);
+		*outfile = -1;
+	}
+	return ;
 }
 
 void	execute_cmd(char *cmd)

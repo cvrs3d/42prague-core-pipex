@@ -6,7 +6,7 @@
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:12:40 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/02 15:54:36 by yustinov         ###   ########.fr       */
+/*   Updated: 2024/11/03 13:02:00 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	check_file_rights(const char *file1)
 	if (access(file1, F_OK) == -1)
 	{
 		perror("File 1 does not exist");
+		perror("Usage: ./pipex file1 cmd1 cmd2 file2");
 		exit(EXIT_FAILURE);
 	}
 	return ;

@@ -6,7 +6,7 @@
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:50:57 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/02 16:18:29 by yustinov         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:56:32 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/types.h>
+# include <errno.h>
 
 int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
 char	*ft_strchr(const char *s, int c);
@@ -36,12 +37,17 @@ void	free_all(char **args);
 char	*set_full_path(char *cmd);
 void	check_file_rights(const char *file1);
 void	check_cmd_rights(const char *cmd);
-void	handle_here_doc(char **argv);
+char	*handle_here_doc(char **argv);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*get_next_line(int fd);
 int		ft_isnewline(char *str);
 void	ft_memmove(char *dst, char *src, int n);
 int		ft_linelen(char *str);
+void	process(int in_fd, int out_fd, char *cmd);
+void	wait_for_children(void);
+pid_t	ft_fork(void);
+void	ft_pipe(int *fd);
+void	hc_pipex(int argc, char **argv);
 
 # define BUFFER_SIZE 4096
 

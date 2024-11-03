@@ -6,13 +6,13 @@
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:33:38 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/02 15:55:23 by yustinov         ###   ########.fr       */
+/*   Updated: 2024/11/03 14:51:06 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	ft_pipe(int *fd)
+void	ft_pipe(int *fd)
 {
 	if (pipe(fd) == -1)
 	{
@@ -21,7 +21,7 @@ static void	ft_pipe(int *fd)
 	}
 }
 
-static pid_t	ft_fork(void)
+pid_t	ft_fork(void)
 {
 	pid_t	pid;
 
@@ -34,7 +34,7 @@ static pid_t	ft_fork(void)
 	return (pid);
 }
 
-static void	wait_for_children(void)
+void	wait_for_children(void)
 {
 	int	status;
 
@@ -42,19 +42,22 @@ static void	wait_for_children(void)
 	{
 		if (WIFEXITED(status))
 		{
-			continue;
+			continue ;
 		}
 		else
 			perror("Child exited abnormally\n");
 	}
 }
 
-static void	process(int in_fd, int out_fd, char *cmd)
+void	process(int in_fd, int out_fd, char *cmd)
 {
 	dup2(in_fd, STDIN_FILENO);
-	dup2(out_fd, STDOUT_FILENO);
+	if (out_fd > 0)
+	{
+		dup2(out_fd, STDOUT_FILENO);
+		close(out_fd);
+	}
 	close(in_fd);
-	close(out_fd);
 	execute_cmd(cmd);
 	exit(EXIT_SUCCESS);
 }
