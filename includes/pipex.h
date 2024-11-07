@@ -6,20 +6,33 @@
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:50:57 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/03 15:56:32 by yustinov         ###   ########.fr       */
+/*   Updated: 2024/11/07 19:06:40 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <stdio.h>
-# include <unistd.h>
 # include <stdlib.h>
-# include <fcntl.h>
+# include <unistd.h>
+# include <limits.h>
 # include <sys/wait.h>
 # include <sys/types.h>
-# include <errno.h>
+# include <fcntl.h>
+# include <stdio.h>
+
+typedef struct s_data
+{
+	int		infile;
+	int		outfile;
+	int		pd[2];
+	int		ac;
+	int		i;
+	int		save;
+	int		flag;
+	char	*limiter;
+	char	*filepath;
+}	t_data;
 
 int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
 char	*ft_strchr(const char *s, int c);
@@ -27,28 +40,26 @@ char	*ft_strdup(const char *s);
 char	*ft_strncpy(char *dest, const char *src, size_t n);
 size_t	ft_strlen(const char *s);
 char	**ft_split(char const *s, char c);
-void	pipex(int argc, char **argv);
+void	pipex(t_data *data, char **argv, char **envp);
 char	*ft_strcpy(char *dest, const char *src);
 char	*ft_strcat(char *dest, const char *src);
-void	execute_cmd(char *cmd);
-void	close_fds(int *fd, int *infile, int *outfile);
-int		ft_open(const char *file, int flags);
-void	free_all(char **args);
-char	*set_full_path(char *cmd);
-void	check_file_rights(const char *file1);
-void	check_cmd_rights(const char *cmd);
-char	*handle_here_doc(char **argv);
+void	free_all(char **matrix);
+void	ft_print_error(char *msg);
+char	*check_path(char *cmd, char **envp);
+char	**get_paths(char **envp);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*get_next_line(int fd);
 int		ft_isnewline(char *str);
 void	ft_memmove(char *dst, char *src, int n);
 int		ft_linelen(char *str);
-void	process(int in_fd, int out_fd, char *cmd);
-void	wait_for_children(void);
-pid_t	ft_fork(void);
-void	ft_pipe(int *fd);
-void	hc_pipex(int argc, char **argv);
+void	pipex_bonus(t_data *data, char **argv, char **envp);
+void	execute(t_data *data, char **argv, char **envp);
+void	first_cmd(t_data *data, char **argv);
+void	last_cmd(t_data *data, char **argv, char **envp);
+void	handle_here_doc(t_data *data, char **argv, char **envp);
+void	here_doc(t_data *data);
+char	*ft_itoa(int n);
 
-# define BUFFER_SIZE 4096
+# define BUFFER_SIZE 10
 
 #endif
