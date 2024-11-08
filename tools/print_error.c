@@ -6,7 +6,7 @@
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:11:56 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/07 16:13:12 by yustinov         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:43:41 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 void	ft_print_error(char *msg)
 {
-	perror(msg);
+	int	i;
+
+	i = 0;
+	while (msg[i])
+	{
+		write(2, &(msg[i]), 1);
+		i++;
+	}
+	write(2, "\n", 1);
 	exit(1);
 }

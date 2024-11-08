@@ -6,7 +6,7 @@
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:24:21 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/07 19:20:27 by yustinov         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:20:32 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ static void	*process_second(t_data *data, char **argv, char **envp)
 	close(data->pd[1]);
 	data->outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (data->outfile == -1)
-		return (ft_print_error("Error opening file"), close(data->pd[0]), NULL);
+		return (close(data->pd[0]), ft_print_error("Error opening file"), NULL);
 	if (dup2(data->outfile, 1) == -1)
-		return (ft_print_error("Dup2 error"), close(data->outfile), NULL);
+		return (close(data->outfile), close(data->pd[0]),
+			ft_print_error("Dup2 error"), NULL);
 	if (dup2(data->pd[0], 0) == -1)
 	{
 		close(data->outfile);
@@ -33,9 +34,10 @@ static void	*process_second(t_data *data, char **argv, char **envp)
 	cmd = ft_split(argv[3], ' ');
 	path = check_path(cmd[0], envp);
 	close(data->outfile);
-	execve(path, cmd, envp);
-	ft_print_error("Error in execve");
-	return (free_all(cmd), free(path), path = NULL, NULL);
+	if (path)
+		execve(path, cmd, envp);
+	return (free_all(cmd), free(path), path = NULL,
+		ft_print_error("Execve failed, wrong cmd"), NULL);
 }
 
 static void	*process_first(t_data *data, char **argv, char **envp)
@@ -51,20 +53,19 @@ static void	*process_first(t_data *data, char **argv, char **envp)
 		return (ft_print_error("Error opening file"), NULL);
 	}
 	if (dup2(data->infile, 0) == -1)
-		return (ft_print_error("Dup2 failed"), close(data->infile), NULL);
+		return (close(data->infile), close(data->pd[1]),
+			ft_print_error("Dup2 failed"), NULL);
 	if (dup2(data->pd[1], 1) == -1)
-	{
-		close(data->pd[1]);
-		close(data->infile);
-		return (ft_print_error("Dup2 failed"), NULL);
-	}
+		return (close(data->infile), close(data->pd[1]),
+			ft_print_error("Dup2 failed"), NULL);
 	close(data->pd[1]);
 	cmd = ft_split(argv[2], ' ');
 	path = check_path(cmd[0], envp);
 	close(data->infile);
-	execve(path, cmd, envp);
-	ft_print_error("Execve failed");
-	return (free_all(cmd), free(path), path = NULL, NULL);
+	if (path)
+		execve(path, cmd, envp);
+	return (free_all(cmd), free(path), path = NULL,
+		ft_print_error("Execve failed, wrong cmd"), NULL);
 }
 
 void	pipex(t_data *data, char **argv, char **envp)

@@ -6,7 +6,7 @@
 /*   By: yustinov <yustinov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 17:39:04 by yustinov          #+#    #+#             */
-/*   Updated: 2024/11/07 19:08:02 by yustinov         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:38:27 by yustinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ void	execute(t_data *data, char **argv, char **envp)
 
 	cmd = ft_split(argv[data->i], ' ');
 	path = check_path(cmd[0], envp);
-	execve(path, cmd, envp);
-	ft_print_error("Execve error");
+	if (path)
+		execve(path, cmd, envp);
+	free_all(cmd);
+	free(path);
+	ft_print_error("Execve error: Bad command");
 }
 
 void	first_cmd(t_data *data, char **argv)
