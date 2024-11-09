@@ -10,12 +10,9 @@ Pipex is a project designed to help you explore a core UNIX mechanism—pipeline
 - [Project Overview](#project-overview)
 - [Usage](#usage)
 - [Examples](#examples)
-- [Mandatory Requirements](#mandatory-requirements)
 - [Bonus Features](#bonus-features)
-- [Compiling and Testing](#compiling-and-testing)
-- [Submission and Evaluation](#submission-and-evaluation)
 
-## Project-Overview
+## Project Overview
 
 - **Program Name**: `pipex`
 - **Language**: C
@@ -52,3 +49,40 @@ make
 ./pipex inputfile cmd1 cmd2 outputfile
 ```
 
+## Examples
+
+Command:
+
+```bash
+file1 < cat | grep foo > file2
+```
+
+Is equal to:
+
+```bash
+./pipex file1 cat "grep foo" file2
+```
+
+## Bonus Features
+
+Bonus is aiming to simulate here_doc> mode for "|" operator and supporting multiple files, more than 2, at once.
+
+Here_doc example:
+
+```bash
+cmd1 << LIMITER | cmd2 >> outputfile
+
+$> pipe here_doc>
+```
+
+Is equal to:
+
+``` bash
+./pipex_bonus here_doc LIMITER cmd1 cmd2 ... cmdn file
+```
+
+To compile bonus part of the project use
+
+``` bash
+make bonus
+```
